@@ -1,0 +1,72 @@
+plugins {
+    id 'com.android.application'
+    id 'org.jetbrains.kotlin.android'
+    id 'androidx.navigation.safeargs.kotlin'
+    id 'kotlin-kapt'
+    id 'com.google.dagger.hilt.android'
+}
+
+apply from: '../dependencies.gradle'
+
+android {
+    namespace 'br.com.dluche.criptocoinviewer'
+    compileSdk 33
+
+    defaultConfig {
+        applicationId "br.com.dluche.criptocoinviewer"
+        minSdk 26
+        targetSdk 33
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+    viewBinding{
+        enabled true
+    }
+}
+
+// Allow references to generated code
+kapt {
+    correctErrorTypes true
+}
+dependencies {
+
+    implementation libraries.coreKtx
+    implementation libraries.appCompat
+    implementation libraries.androidMaterial
+    implementation libraries.constraintLayout
+    implementation libraries.coroutine
+    implementation libraries.viewModel
+    implementation libraries.retrofit
+    implementation libraries.retrofitGsonConverter
+    implementation libraries.gson
+    implementation libraries.fragment
+    implementation libraries.fragmentKtx
+    implementation libraries.navigationFragment
+    implementation libraries.facebookShimmer
+    implementation libraries.room
+    implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
+    kapt libraries.roomAnnotation
+    implementation libraries.hilt
+    kapt libraries.hiltAnnotation
+
+
+    testImplementation librariesTest.junit
+    androidTestImplementation librariesTest.junitAndroid
+    androidTestImplementation librariesTest.espressoCore
+}
