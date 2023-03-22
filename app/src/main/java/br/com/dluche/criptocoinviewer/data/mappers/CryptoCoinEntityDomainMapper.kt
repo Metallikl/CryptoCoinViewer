@@ -2,7 +2,7 @@ package br.com.dluche.criptocoinviewer.data.mappers
 
 import br.com.dluche.criptocoinviewer.common.Mapper
 import br.com.dluche.criptocoinviewer.data.model.entity.CryptoCoinEntity
-import br.com.dluche.criptocoinviewer.data.model.response.crypto_coin.CryptoCoinDto
+import br.com.dluche.criptocoinviewer.domain.model.CryptoCoinType
 import br.com.dluche.criptocoinviewer.domain.model.CryptoCoin
 
 class CryptoCoinEntityDomainMapper : Mapper<List<CryptoCoinEntity>, List<CryptoCoin>> {
@@ -18,7 +18,7 @@ class CryptoCoinEntityDomainMapper : Mapper<List<CryptoCoinEntity>, List<CryptoC
                         name = it.name,
                         rank = it.rank,
                         symbol = it.symbol,
-                        type = it.type
+                        type = CryptoCoinType.parse(it.type.lowercase())
                     )
                 )
             }

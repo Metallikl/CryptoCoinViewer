@@ -31,7 +31,7 @@ class CoinListViewModel @Inject constructor(
     fun getCoins(forceReset: Boolean = false) {
         viewModelScope.launch(dispatchers.io()) {
             _state.value = CoinListState(
-                isLoading = true
+                isLoading = true,
             )
             //
             getCoinsUseCase(forceReset = forceReset).collect { result ->

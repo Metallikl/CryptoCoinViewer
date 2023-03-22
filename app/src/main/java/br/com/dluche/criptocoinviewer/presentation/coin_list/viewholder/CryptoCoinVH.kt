@@ -1,14 +1,15 @@
 package br.com.dluche.criptocoinviewer.presentation.coin_list.viewholder
 
 import android.content.Context
-import android.graphics.PorterDuff
+import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.appcompat.content.res.AppCompatResources
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import br.com.dluche.criptocoinviewer.R
 import br.com.dluche.criptocoinviewer.databinding.CryptoCoinItemBinding
 import br.com.dluche.criptocoinviewer.domain.model.CryptoCoin
+import br.com.dluche.criptocoinviewer.domain.model.CryptoCoinType
 
 class CryptoCoinVH(
     private val binding: CryptoCoinItemBinding
@@ -28,19 +29,36 @@ class CryptoCoinVH(
             tvName.text = coin.name
             tvRank.text = coin.rank.toString()
             tvSymbol.text = coin.symbol
-            tvType.text = coin.type
-            ivActive.apply {
-                setImageDrawable(AppCompatResources.getDrawable(context,R.drawable.baseline_attach_money_24))
-                setColorFilter(getActiveColor(context,coin.isActive), PorterDuff.Mode.SRC_ATOP)
+            ivType.apply {
+                setImageDrawable(
+                    getTypeIcon(context,coin.type)
+                )
             }
+            ivActive.apply {
+                setImageDrawable(
+                    getActiveIcon(context, coin.isActive)
+                )
+            }
+
         }
     }
 
-    private fun getActiveColor(context: Context, isActive: Boolean): Int {
+    private fun getTypeIcon(context: Context, type: CryptoCoinType): Drawable? {
+        val rIcon = when (type) {
+            CryptoCoinType.COIN -> R.drawable.outline_monetization_on_24
+            CryptoCoinType.TOKEN -> R.drawable.integrated_circuit_chip
+            CryptoCoinType.UNDEFINED -> R.drawable.integrated_circuit_chip
+        }
+        //
+        return ContextCompat.getDrawable(context, rIcon)
+    }
+
+    private fun getActiveIcon(context: Context, isActive: Boolean): Drawable? {
         return if (isActive) {
-            context.getColor(R.color.green_200)
+            ContextCompat.getDrawable(context, R.drawable.twotone_circle_24_green)
         } else {
-            context.getColor(R.color.red_200)
+            ContextCompat.getDrawable(context, R.drawable.twotone_circle_24_red)
         }
     }
+
 }

@@ -9,5 +9,5 @@ data class CryptoCoin(
     val name: String = String().emptyString(),
     val rank: Int = 0,
     val symbol: String = String().emptyString(),
-    val type: String = String().emptyString()
+    val type: CryptoCoinType = CryptoCoinType.COIN
 )
