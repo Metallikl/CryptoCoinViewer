@@ -21,9 +21,22 @@
             android:layout_height="wrap_content"
             android:minHeight="?android:attr/actionBarSize"
             app:defaultQueryHint="@string/search_coin"
-            app:queryHint="@string/search_coin" />
+            app:queryHint="@string/search_coin"
+            android:layout_marginEnd="16dp"
+            />
 
     </com.google.android.material.appbar.MaterialToolbar>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_warning"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/pull_to_refresh"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbar"
+        android:textSize="10sp"
+        />
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/sr_coins"
@@ -33,32 +46,39 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/toolbar"
+        app:layout_constraintTop_toBottomOf="@id/tv_warning"
         app:layout_constraintVertical_bias="0"
-        android:padding="16dp"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:paddingBottom="16dp"
         >
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_coins"
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/ll_main"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            tools:itemCount="5"
-            tools:listitem="@layout/crypto_coin_item" />
+            android:orientation="vertical">
+
+            <include
+                android:id="@+id/inc_shimmer"
+                layout="@layout/crypto_coin_list_placeholder"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="visible"
+                />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_coins"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:itemCount="5"
+                tools:listitem="@layout/crypto_coin_item" />
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
 
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
-    <include
-        android:id="@+id/inc_shimmer"
-        layout="@layout/crypto_coin_list_placeholder"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:visibility="visible"
-        app:layout_constrainedHeight="true"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/toolbar"
-        app:layout_constraintVertical_bias="0"
-        />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

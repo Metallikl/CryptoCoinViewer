@@ -1,15 +1,18 @@
 package br.com.dluche.criptocoinviewer.di
 
+import android.content.Context
 import br.com.dluche.criptocoinviewer.common.AppCoroutinesDispatchersImpl
-import br.com.dluche.criptocoinviewer.data.api.PaprikaCoinApi
 import br.com.dluche.criptocoinviewer.common.Constants.BASE_URL
-import br.com.dluche.criptocoinviewer.data.mappers.CryptoCoinDtoDomainMapper
+import br.com.dluche.criptocoinviewer.common.ContentProviderImpl
+import br.com.dluche.criptocoinviewer.data.api.PaprikaCoinApi
 import br.com.dluche.criptocoinviewer.data.mappers.CryptoCoinDetailsDtoDomainMapper
+import br.com.dluche.criptocoinviewer.data.mappers.CryptoCoinDtoDomainMapper
 import br.com.dluche.criptocoinviewer.data.mappers.CryptoCoinDtoToEntityMapper
 import br.com.dluche.criptocoinviewer.data.mappers.CryptoCoinEntityDomainMapper
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -50,4 +53,9 @@ object AppModule {
     @Provides
     fun provideCryptoCoinEntityDomainMapper(): CryptoCoinEntityDomainMapper =
         CryptoCoinEntityDomainMapper()
+
+    @Provides
+    fun provideContentProvider(@ApplicationContext context: Context): ContentProviderImpl {
+        return ContentProviderImpl(context = context)
+    }
 }

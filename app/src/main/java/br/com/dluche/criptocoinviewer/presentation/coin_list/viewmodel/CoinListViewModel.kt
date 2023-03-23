@@ -143,6 +143,6 @@ data class CoinListState(
     val isLoadingNextPage: Boolean = false,
     val isErrorNextPage: Boolean = false,
     val search: String? = null,
-    val message: String = String().emptyString(),
+    val message: String = String.emptyString(),
     val coinList: List<CryptoCoin> = emptyList(),
 )
