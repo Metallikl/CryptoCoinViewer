@@ -6,10 +6,15 @@ import androidx.recyclerview.widget.ListAdapter
 import br.com.dluche.criptocoinviewer.domain.model.CryptoCoin
 import br.com.dluche.criptocoinviewer.presentation.coin_list.viewholder.CryptoCoinVH
 
-class CoinListAdapter : ListAdapter<CryptoCoin, CryptoCoinVH>(diff) {
+class CoinListAdapter(
+    private val onCoinClick: (coin: CryptoCoin) -> Unit
+) : ListAdapter<CryptoCoin, CryptoCoinVH>(diff) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CryptoCoinVH {
-        return CryptoCoinVH(parent)
+        return CryptoCoinVH(
+            parent = parent,
+            onCoinClick = onCoinClick
+        )
     }
 
     override fun onBindViewHolder(holder: CryptoCoinVH, position: Int) {

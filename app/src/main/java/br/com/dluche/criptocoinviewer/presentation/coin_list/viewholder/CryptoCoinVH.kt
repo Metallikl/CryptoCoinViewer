@@ -12,16 +12,19 @@ import br.com.dluche.criptocoinviewer.domain.model.CryptoCoin
 import br.com.dluche.criptocoinviewer.domain.model.CryptoCoinType
 
 class CryptoCoinVH(
-    private val binding: CryptoCoinItemBinding
+    private val binding: CryptoCoinItemBinding,
+    private val onCoinClick: (coin: CryptoCoin) -> Unit
 ) : RecyclerView.ViewHolder(binding.root) {
     constructor(
-        parent: ViewGroup
+        parent: ViewGroup,
+        onCoinClick: (coin: CryptoCoin) -> Unit
     ) : this(
         binding = CryptoCoinItemBinding.inflate(
             LayoutInflater.from(parent.context),
             parent,
             false
-        )
+        ),
+        onCoinClick = onCoinClick
     )
 
     fun onBind(coin: CryptoCoin) {
@@ -39,7 +42,9 @@ class CryptoCoinVH(
                     getActiveIcon(context, coin.isActive)
                 )
             }
-
+            root.setOnClickListener {
+                onCoinClick(coin)
+            }
         }
     }
 

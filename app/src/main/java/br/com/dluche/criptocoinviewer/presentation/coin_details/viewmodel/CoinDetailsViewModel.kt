@@ -11,12 +11,14 @@ import br.com.dluche.criptocoinviewer.common.EitherResult
 import br.com.dluche.criptocoinviewer.domain.model.CryptoCoinDetails
 import br.com.dluche.criptocoinviewer.domain.usescases.GetCoinDetailsUseCase
 import br.com.dluche.criptocoinviewer.extensions.emptyString
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+@HiltViewModel
 class CoinDetailsViewModel @Inject constructor(
     private val dispatchers: AppCoroutinesDispatchers,
     private val getCoinDetailsUseCase: GetCoinDetailsUseCase,
@@ -35,7 +37,7 @@ class CoinDetailsViewModel @Inject constructor(
         getCoinDetails()
     }
 
-    private fun getCoinDetails() {
+    fun getCoinDetails() {
         viewModelScope.launch(dispatchers.io()) {
             _state.update { curState ->
                 curState.copy(

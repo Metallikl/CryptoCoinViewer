@@ -9,5 +9,24 @@
         android:id="@+id/coinsListFragment"
         android:name="br.com.dluche.criptocoinviewer.presentation.coin_list.fragment.CoinsListFragment"
         android:label="fragment_coins_list"
-        tools:layout="@layout/fragment_coins_list" />
+        tools:layout="@layout/fragment_coins_list" >
+
+        <action
+            android:id="@+id/action_coinsListFragment_to_coinDetailsFragment"
+            app:destination="@id/coinDetailsFragment"
+
+            />
+    </fragment>
+    <fragment
+        android:id="@+id/coinDetailsFragment"
+        android:name="br.com.dluche.criptocoinviewer.presentation.coin_details.fragment.CoinDetailsFragment"
+        android:label="fragment_coin_details"
+        tools:layout="@layout/fragment_coin_details">
+        <argument
+            android:name="coinId"
+            app:argType="string"
+            android:defaultValue="" />
+
+    </fragment>
+
 </navigation>

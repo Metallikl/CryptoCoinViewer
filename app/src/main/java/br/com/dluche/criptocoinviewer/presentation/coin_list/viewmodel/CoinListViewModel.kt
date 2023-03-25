@@ -106,10 +106,13 @@ class CoinListViewModel @Inject constructor(
             ).collect { result ->
                 when (result) {
                     is EitherResult.Error -> {
-                        _state.value = CoinListState(
-                            isErrorNextPage = true,
-                            message = result.error.message.orEmpty()
-                        )
+                        _state.update { curState ->
+                            curState.copy(
+                                isLoading = false,
+                                isErrorNextPage = true,
+                                message = result.error.message.orEmpty()
+                            )
+                        }
                     }
                     is EitherResult.Success -> {
                         _state.update { state ->
@@ -135,6 +138,14 @@ class CoinListViewModel @Inject constructor(
         search = _state.value.search,
         offset = _state.value.coinList.size
     )
+
+    fun resetMessage() {
+        _state.update { curState ->
+            curState.copy(
+                message = String.emptyString()
+            )
+        }
+    }
 }
 
 data class CoinListState(

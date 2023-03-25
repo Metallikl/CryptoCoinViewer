@@ -8,14 +8,20 @@ import androidx.appcompat.widget.SearchView.OnQueryTextListener
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import br.com.dluche.criptocoinviewer.databinding.FragmentCoinsListBinding
+import br.com.dluche.criptocoinviewer.domain.model.CryptoCoin
+import br.com.dluche.criptocoinviewer.extensions.showSnackbar
 import br.com.dluche.criptocoinviewer.presentation.coin_list.adapter.CoinListAdapter
 import br.com.dluche.criptocoinviewer.presentation.coin_list.viewmodel.CoinListState
 import br.com.dluche.criptocoinviewer.presentation.coin_list.viewmodel.CoinListViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class CoinsListFragment : Fragment() {
@@ -23,7 +29,7 @@ class CoinsListFragment : Fragment() {
     private val viewModel: CoinListViewModel by viewModels()
     private lateinit var binding: FragmentCoinsListBinding
     private val adapter: CoinListAdapter by lazy {
-        CoinListAdapter()
+        CoinListAdapter(::onCoinClick)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -45,17 +51,32 @@ class CoinsListFragment : Fragment() {
     }
 
     private fun setObservers() {
-        lifecycleScope.launchWhenResumed {
-            viewModel.state.collect { state ->
-                if (state.coinList.isNotEmpty() && !state.isLoadingNextPage) {
-                    adapter.submitList(state.coinList)
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.RESUMED) {
+                viewModel.state.collect { state ->
+                    if (!state.isLoadingNextPage) {
+                        adapter.submitList(state.coinList)
+                    }
+                    //
+                    binding.srCoins.isRefreshing = state.isLoading
+                    binding.rvCoins.isVisible = !state.isLoading
+                    binding.svCoin.setQuery(state.search, false)
+                    binding.btnError.isVisible = state.isErrorNextPage
+                    handleErrorMessage(state)
+                    handleShimmer(state)
                 }
-                //
-                binding.srCoins.isRefreshing = state.isLoading
-                binding.rvCoins.isVisible = !state.isLoading
-                binding.svCoin.setQuery(state.search,false)
-                handleShimmer(state)
             }
+        }
+    }
+
+    private fun handleErrorMessage(state: CoinListState) {
+        if (state.message.isNotEmpty() && (state.isErrorNextPage || state.isError)) {
+            showSnackbar(
+                binding.root,
+                state.message
+            )
+            //
+            viewModel.resetMessage()
         }
     }
 
@@ -68,6 +89,13 @@ class CoinsListFragment : Fragment() {
             initSearchViewCoin()
             initSwipeRefresh()
             initRecycleCoins()
+            initErrorNextPageButton()
+        }
+    }
+
+    private fun FragmentCoinsListBinding.initErrorNextPageButton() {
+        btnError.setOnClickListener {
+            viewModel.getCoinsNextPage()
         }
     }
 
@@ -116,7 +144,17 @@ class CoinsListFragment : Fragment() {
         })
     }
 
-    companion object{
+    private fun onCoinClick(coin: CryptoCoin) {
+        findNavController().navigate(
+            CoinsListFragmentDirections.actionCoinsListFragmentToCoinDetailsFragment(coin.id)
+        )
+    }
+
+    private fun onErrorClick() {
+
+    }
+
+    companion object {
         private const val ITEM_COUNT_OFFSET = 3
         private const val ITEM_COUNT_NONE_OFFSET = 0
     }
