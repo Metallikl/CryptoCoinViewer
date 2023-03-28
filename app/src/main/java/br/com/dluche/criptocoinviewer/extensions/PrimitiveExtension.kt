@@ -6,3 +6,15 @@ fun Boolean.toInt(): Int {
         false -> 0
     }
 }
+
+fun Boolean?.orFalse(): Boolean {
+    return this ?: false
+}
+
+fun Boolean?.orDefault(default: Boolean = false): Boolean {
+    return this ?: default
+}
+
+fun Int?.orDefault(default: Int = 0): Int {
+    return this ?: default
+}

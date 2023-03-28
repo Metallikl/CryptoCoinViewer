@@ -5,15 +5,15 @@ import com.google.gson.annotations.SerializedName
 
 data class LinksDto(
     @SerializedName("explorer")
-    val explorer: List<String> = listOf(),
+    val explorer: List<String>? = listOf(),
     @SerializedName("facebook")
-    val facebook: List<String> = listOf(),
+    val facebook: List<String>? = listOf(),
     @SerializedName("reddit")
-    val reddit: List<String> = listOf(),
+    val reddit: List<String>? = listOf(),
     @SerializedName("source_code")
-    val sourceCode: List<String> = listOf(),
+    val sourceCode: List<String>? = listOf(),
     @SerializedName("website")
-    val website: List<String> = listOf(),
+    val website: List<String>? = listOf(),
     @SerializedName("youtube")
-    val youtube: List<String> = listOf()
+    val youtube: List<String>? = listOf()
 )

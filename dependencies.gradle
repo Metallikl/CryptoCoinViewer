@@ -21,6 +21,7 @@ ext {
     recyclerviewVersion = "1.2.1"
     roomVersion = "2.4.3"
     hiltVersion = "2.44"
+    swipeRefreshLayoutVersion = "1.1.0"
 
     libraries = [
             coroutine              : "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutineVersion",
@@ -51,6 +52,7 @@ ext {
             roomAnnotation         : "androidx.room:room-compiler:$roomVersion",
             hilt                   : "com.google.dagger:hilt-android:$hiltVersion",
             hiltAnnotation         : "com.google.dagger:hilt-compiler:$hiltVersion",
+            swipeRefreshLayout         : "androidx.swiperefreshlayout:swiperefreshlayout:$swipeRefreshLayoutVersion",
     ]
 
     librariesTest = [

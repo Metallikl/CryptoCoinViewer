@@ -60,10 +60,11 @@ dependencies {
     implementation libraries.navigationFragment
     implementation libraries.facebookShimmer
     implementation libraries.room
-    implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
+    implementation libraries.swipeRefreshLayout
     kapt libraries.roomAnnotation
     implementation libraries.hilt
     kapt libraries.hiltAnnotation
+    implementation libraries.glide
 
 
     testImplementation librariesTest.junit

@@ -7,36 +7,38 @@ import br.com.dluche.criptocoinviewer.data.model.response.crypto_coin_detail.Tea
 import br.com.dluche.criptocoinviewer.domain.model.CryptoCoinDetails
 import br.com.dluche.criptocoinviewer.domain.model.Tag
 import br.com.dluche.criptocoinviewer.domain.model.Team
+import br.com.dluche.criptocoinviewer.extensions.orDefault
+import br.com.dluche.criptocoinviewer.extensions.orFalse
 
 class CryptoCoinDetailsDtoDomainMapper : Mapper<CryptoDetailsDto, CryptoCoinDetails> {
     override fun mapTo(from: CryptoDetailsDto): CryptoCoinDetails {
         return CryptoCoinDetails(
-            description = from.description,
-            firstDataAt = from.firstDataAt,
-            id = from.id,
-            isActive = from.isActive,
-            isNew = from.isNew,
-            lastDataAt = from.lastDataAt,
-            logo = from.logo,
-            message = from.message,
-            name = from.name,
-            openSource = from.openSource,
-            rank = from.rank,
-            startedAt = from.startedAt,
-            symbol = from.symbol,
-            tags = mapTags(from.tags),
-            team = mapTeam(from.team),
-            type = from.type
+            description = from.description.orEmpty(),
+            firstDataAt = from.firstDataAt.orEmpty(),
+            id = from.id.orEmpty(),
+            isActive = from.isActive.orFalse(),
+            isNew = from.isNew.orFalse(),
+            lastDataAt = from.lastDataAt.orEmpty(),
+            logo = from.logo.orEmpty(),
+            message = from.message.orEmpty(),
+            name = from.name.orEmpty(),
+            openSource = from.openSource.orFalse(),
+            rank = from.rank?:0,
+            startedAt = from.startedAt.orEmpty(),
+            symbol = from.symbol.orEmpty(),
+            tags = mapTags(from.tags.orEmpty()),
+            team = mapTeam(from.team.orEmpty()),
+            type = from.type.orEmpty()
         )
     }
 
     private fun mapTags(tags: List<TagDto>): List<Tag> {
         return tags.map {
             Tag(
-                coinCounter = it.coinCounter,
-                icoCounter = it.icoCounter,
-                id = it.id,
-                name = it.name
+                coinCounter = it.coinCounter.orDefault(),
+                icoCounter = it.icoCounter.orDefault(),
+                id = it.id.orEmpty(),
+                name = it.name.orEmpty()
             )
         }
     }
@@ -44,9 +46,9 @@ class CryptoCoinDetailsDtoDomainMapper : Mapper<CryptoDetailsDto, CryptoCoinDeta
     private fun mapTeam(team: List<TeamDto>): List<Team> {
         return team.map {
             Team(
-                id = it.id,
-                name = it.name,
-                position = it.position
+                id = it.id.orEmpty(),
+                name = it.name.orEmpty(),
+                position = it.position.orEmpty()
             )
         }
     }
