@@ -8,12 +8,22 @@
     tools:context=".presentation.coin_details.fragment.CoinDetailsFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/details_conteiner"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
+
+        <include
+            android:id="@+id/inc_shimmer"
+            layout="@layout/coin_details_placeholder"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/iv_logo"
@@ -22,7 +32,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/outline_monetization_on_24" />
+            app:srcCompat="@drawable/outline_monetization_on_24"
+            app:layout_constraintVertical_bias="0"/>
 
         <TextView
             android:id="@+id/tv_name"
@@ -30,50 +41,52 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:text="@string/hello_blank_fragment"
+            android:textSize="20sp"
+            android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/iv_logo"
-            android:textStyle="bold"
-            android:textSize="20sp"
-            />
+            app:layout_constraintTop_toBottomOf="@id/iv_logo" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tv_description"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_name"
-            tools:text="Loren ipsun Loren ipsun Loren ipsun Loren ipsun Loren ipsun Loren ipsun Loren ipsun"
-            android:layout_marginTop="16dp"
-            />
+            tools:text="Loren ipsun Loren ipsun Loren ipsun Loren ipsun Loren ipsun Loren ipsun Loren ipsun" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_tags"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
+            app:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_description"
-            app:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager"
             app:spanCount="3"
             tools:itemCount="5"
-            tools:listitem="@layout/tag_item"
-            />
+            tools:listitem="@layout/tag_item" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_members"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/rv_tags"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             tools:itemCount="8"
-            tools:listitem="@layout/team_item"
-            />
+            tools:listitem="@layout/team_item" />
+
+        <androidx.constraintlayout.widget.Group
+            android:id="@+id/gp_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:constraint_referenced_ids="iv_logo,tv_name,tv_description,rv_members,rv_tags"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

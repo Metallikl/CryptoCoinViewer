@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -52,9 +53,15 @@ class CoinDetailsFragment : Fragment() {
             .flowWithLifecycle(lifecycle, Lifecycle.State.RESUMED)
             .onEach {
                 viewModel.state.collect { state ->
+                    handleContentVisibility(state)
                     setupLayout(state.coinDetail)
                 }
             }.launchIn(lifecycleScope)
+    }
+
+    private fun handleContentVisibility(state: CoinDetailsViewModel.CoinDetailsState) {
+        binding.incShimmer.root.isVisible = state.isLoading
+        binding.gpContent.isVisible = !state.isLoading
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
